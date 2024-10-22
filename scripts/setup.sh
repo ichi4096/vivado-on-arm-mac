@@ -44,17 +44,22 @@ case $user_consent in
 esac
 
 # Check if the Mac is Intel or Apple Silicon
-if [[ "$(uname -m)" == "x86_64" ]]; then
-	f_echo "Mac is Intel-based. Rosetta installation is not required."
+if [[ "$(sysctl sysctl.proc_translated)" == "sysctl.proc_translated: 1" ]]; then
+	f_echo "Terminal is in emulated mode. Convert terminal to native mode and restart."
+	exit 1
 else
-	if arch -arch x86_64 uname -m > /dev/null 2>&1; then
-		f_echo "Rosetta is already installed."
+	if [[ "$(uname -m)" == "x86_64" ]]; then
+		f_echo "Mac is Intel-based. Rosetta installation is not required."
 	else
-		f_echo "Rosetta is not installed."
-		f_echo "Proceeding with Rosetta installation..."
-		if ! softwareupdate --install-rosetta --agree-to-license; then
-			f_echo "Error installing Rosetta."
-			exit 1
+		if arch -arch x86_64 uname -m > /dev/null 2>&1; then
+			f_echo "Rosetta is already installed."
+		else
+			f_echo "Rosetta is not installed."
+			f_echo "Proceeding with Rosetta installation..."
+			if ! softwareupdate --install-rosetta --agree-to-license; then
+				f_echo "Error installing Rosetta."
+				exit 1
+			fi
 		fi
 	fi
 fi
