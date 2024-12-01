@@ -14,6 +14,7 @@ declare -A web_hashes=(
     ["e47ad71388b27a6e2339ee82c3c8765f"]=202310
     ["b8c785d03b754766538d6cde1277c4f0"]=202320
     ["8b0e99a41b851b50592d5d6ef1b1263d"]=202410
+    ["20c806793b3ea8d79273d5138fbd195f"]=202420
 )
 # hashes for the full installer
 # not tested yet
